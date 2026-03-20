@@ -15,11 +15,11 @@ const run = async () => {
 		year: 1960
 	});
 
-	const results = await Promise.all([
-		client.hGetAll('car1'),
-		client.hGetAll('car2'),
-		client.hGetAll('car3')
-	]);
+	const commands = [1, 2, 3].map((id) => {
+		return client.hGetAll('car' + id);
+	});
+
+	const results = await Promise.all(commands);
 
 	console.log(results);
 };
