@@ -14,8 +14,10 @@ export const searchItems = async (term: string, size: number = 5) => {
 	if (cleaned === '') {
 		return [];
 	}
+
+	const query = `(@name:(${cleaned})=> {$weight:5.0})|(@description:(${cleaned}))`;
 	//Use the client to do an actual search
-	const results = await client.ft.search(itemsIndexKey(), cleaned, {
+	const results = await client.ft.search(itemsIndexKey(), query, {
 		LIMIT: {
 			from: 0,
 			size
